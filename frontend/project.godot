@@ -1,0 +1,51 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Creaject"
+config/features=PackedStringArray("4.7", "C#")
+run/low_processor_mode=true
+
+[autoload]
+
+BackendService="*uid://bxyldsms1st3y"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/vsync/vsync_mode=0
+
+[dotnet]
+
+project/assembly_name="Creaject"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/markdownlabel/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://Globals/": "yellow",
+"res://Scenes/": "green",
+"res://UI Components/": "blue"
+}
+
+[physics]
+
+common/physics_ticks_per_second=1
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/quality/use_debanding=true
