@@ -1,10 +1,9 @@
 using Godot;
-using System;
 using CreajectBackend;
 
 public partial class BackendService : Node
 {
-    private static DatabaseManager DB;
+    private DatabaseManager DB;
 
     public override void _Ready()
     {
@@ -13,4 +12,13 @@ public partial class BackendService : Node
     }
 
     // expose backend methods
+    public bool NewProject(string Name, string Path)
+    {
+        return DB.NewProject(Name, Path);
+    }
+
+    public bool OpenProject(string Path)
+    {
+        return DB.OpenProject(Path);
+    }
 }

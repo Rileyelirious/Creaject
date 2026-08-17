@@ -60,10 +60,12 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 42.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Editor" type="Panel" parent="HBoxContainer" unique_id=484655981]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_rlt6q")
@@ -138,4 +140,27 @@ h5 = SubResource("Resource_ekswf")
 h6 = SubResource("Resource_50d5m")
 metadata/_custom_type_script = "uid://dbap0gqox0ty1"
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=757648499]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 42.0
+grow_horizontal = 2
+theme_override_constants/separation = 6
+
+[node name="HideShowEditor" type="Button" parent="HBoxContainer2" unique_id=1335104612]
+layout_mode = 2
+text = "Hide/Show Editor"
+
+[node name="Save" type="Button" parent="HBoxContainer2" unique_id=1119436519]
+layout_mode = 2
+text = "Save"
+
+[node name="FileName" type="LineEdit" parent="HBoxContainer2" unique_id=1351506085]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "File Name"
+
 [connection signal="text_changed" from="HBoxContainer/Editor/ScrollContainer/EditorText" to="." method="_on_editor_text_changed"]
+[connection signal="pressed" from="HBoxContainer2/HideShowEditor" to="." method="_on_hide_show_editor_pressed"]

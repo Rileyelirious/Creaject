@@ -3,31 +3,51 @@ namespace CreajectBackend;
 using System.IO;
 using System.Text.Json;
 
-public class DatabaseManager
+public class ProjectData
 {
-    private Dictionary<string, string>? ProjectInfo;
+    public string ProjectName {get; set;}
+    public string ProjectPath {get; set;}
 
-    public void NewProject(String name, String path)
+    public ProjectData(string name, string path)
     {
-        ProjectInfo = new Dictionary<string, string>
-        {
-            ["name"] = name
-        };
-
-        var ProjectFormatOptions = new JsonSerializerOptions {WriteIndented = true};
-        string ProjectFileContent = JsonSerializer.Serialize(ProjectInfo, ProjectFormatOptions);
-
-        Directory.CreateDirectory(path);
-        File.WriteAllText($"{path}/{name}.creaject", ProjectFileContent);
+        ProjectName = name;
+        ProjectPath = path;
     }
 }
 
-// testing
-class Program
+public class DatabaseManager
 {
-    static void Main(string[] args)
+    public ProjectData? CurrentProjectData {get; private set;}
+
+    public bool NewProject(string Name, string PathToProject)
     {
-        DatabaseManager db = new DatabaseManager();
-        db.NewProject("TestProj", "./TestProj");
+        CurrentProjectData = new ProjectData(Name, Path.GetFullPath(PathToProject));
+
+        var ProjectFormatOptions = new JsonSerializerOptions {WriteIndented = true};
+        string ProjectFileContent = JsonSerializer.Serialize(CurrentProjectData, ProjectFormatOptions);
+
+        if (Directory.Exists(PathToProject) != true)
+        {
+            Directory.CreateDirectory(PathToProject);
+            File.WriteAllText($"{PathToProject}/{Name}.creaject", ProjectFileContent);
+            return true;
+        }
+        else {return false;}
+    }
+
+    public bool OpenProject(string PathToFile)
+    {
+        string FileContent = File.ReadAllText(PathToFile);
+        CurrentProjectData = JsonSerializer.Deserialize<ProjectData>(FileContent);
+        return CurrentProjectData != null;
+    }
+
+    public void SaveDocument(string FileName, string FileContent)
+    {
+        if (CurrentProjectData != null)
+        {
+            Directory.CreateDirectory($"{CurrentProjectData.ProjectPath}/docs");
+            File.WriteAllText($"{CurrentProjectData.ProjectPath}/docs/{FileName}.md", FileContent);
+        }
     }
 }
